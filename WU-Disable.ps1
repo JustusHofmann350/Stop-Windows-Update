@@ -1,26 +1,11 @@
 # Copyright (c) 2025 Justus Hofmann
-$ErrorActionPreference = 'SilentlyContinue'
-
-if (-not (New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)){
-    Write-Host "You need to run this script as an Administrator!"
-    Break
-}
 
 param (
-    [Parameter(Mandatory = $true, ParameterSetName = "EnableUpdates")]
     [switch]$Enable,
-
-    [Parameter(Mandatory = $true, ParameterSetName = "DisableUpdates")]
     [switch]$Disable
 )
 
-
-if ($Enable) {
-    Enable-Updates
-}
-elseif ($Disable) {
-    Disable-Updates
-}
+$ErrorActionPreference = 'Stop'
 
 function Enable-Updates {
     # Rename back to original name
@@ -64,6 +49,26 @@ function Disable-Updates {
         Write-Host "Error occured. Try again or check the README"
     }
 }
-    
-    
 
+if (-not (New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)){
+    Write-Host "You need to run this script as an Administrator!"
+    Break
+}
+
+if (-not $Enable -and -not $Disable) {
+    Write-Error "You must specify either -Enable or -Disable."
+    exit 1
+}
+
+if ($Enable -and $Disable) {
+    Write-Error "You cannot specify both -Enable and -Disable."
+    exit 1
+}
+
+if ($Enable) {
+    Enable-Updates
+}
+
+if ($Disable) {
+    Disable-Updates
+}
