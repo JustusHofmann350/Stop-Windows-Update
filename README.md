@@ -10,7 +10,7 @@ This PowerShell script enables or disables Windows Updates by renaming registry 
 ---
 
 ## Important Caveats !!
- -System File Check (SFC) fails.
+- System File Check (SFC) fails.
 - wsl.exe --install fails with 0x80070005.
 - DISM.exe /Online /Cleanup-Image /Restorehealth fails.
 - Anything related to Microsoft Store fails with 0x8a15005e. This is true even if you are using for example WingetUI/UnigetUI.
