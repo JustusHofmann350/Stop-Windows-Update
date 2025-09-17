@@ -9,6 +9,14 @@ This PowerShell script enables or disables Windows Updates by renaming registry 
 
 ---
 
+## Important Caveats !!
+ -System File Check (SFC) fails.
+- wsl.exe --install fails with 0x80070005.
+- DISM.exe /Online /Cleanup-Image /Restorehealth fails.
+- Anything related to Microsoft Store fails with 0x8a15005e. This is true even if you are using for example WingetUI/UnigetUI.
+
+---
+
 ## Important Notes 
 - Run the script as Administrator.
 - Disabling updates may expose your system to risks. Use at your own risk.
@@ -27,6 +35,11 @@ This PowerShell script enables or disables Windows Updates by renaming registry 
 ## What it does
 - Disabling backs up the relevant registry section and renames update-related services to block updates.
 - Enabling restores original service names and prompts for a restart.
+
+---
+
+## Credit
+This was inspired by [Henke's](https://superuser.com/users/1102737/henke) post on this question: <https://superuser.com/questions/946957/stopping-all-automatic-updates-windows-10>
 
 ---
 
