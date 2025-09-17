@@ -5,7 +5,7 @@
 ---
 
 ## Description
-This PowerShell script enables or disables Windows Updates by renaming registry keys for update-related services. Useful for administrators who want to quickly block or restore Windows Update functionality.
+This PowerShell script enables or disables Windows Updates by renaming registry keys for update-related services. Useful for administrators who want to quickly block Windows Update functionality.
 
 ---
 
