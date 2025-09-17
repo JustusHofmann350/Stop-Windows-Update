@@ -33,9 +33,11 @@ function Enable-Updates {
     # Rename back to original name
     Write-Host "Enabling updates..."
     Rename-Item HKLM:\SYSTEM\CurrentControlSet\Services\wuauserv-BLOCKED!! -NewName wuauserv
-    if (Test-Path HKLM:\SYSTEM\CurrentControlSet\Services\wuauserv){
+    Rename-Item HKLM:\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc-BLOCKED!! -NewName WaaSMedicSvc
+    if ((Test-Path HKLM:\SYSTEM\CurrentControlSet\Services\wuauserv) -and (Test-Path HKLM:\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc)){
         Write-Host "Successfully enabled updates."
-        Write-Host "nRestart your Computer for the changes to take effect. DO NOT shutdown or use the power button. A restart is needed."
+        Write-Host
+        Write-Host "Restart your Computer for the changes to take effect. DO NOT shutdown or use the power button. A restart is needed."
     }
     else {
         Write-Host "Error occured. Try again or check the README"
@@ -44,14 +46,14 @@ function Enable-Updates {
 
 function Disable-Updates {
     # Backup registry
-    Write-Host "Disabling updates...`n"
+    Write-Host "Disabling updates..."
+    Write-Host
     try {
         Write-Host "    Backing up registry..."
-        $regPath = "HKLM:\SYSTEM\CurrentControlSet\Services"
+        $regPath = "HKLM\SYSTEM\CurrentControlSet\Services"
         $outputFile = Join-Path $PSScriptRoot "RegServicesBackup.reg"
-
-        reg export "$regPath" "$outputFile" /y
-        Write-Host "        Backed up $regPath to: $outputFIle"
+        reg export "$regPath" "$outputFile" /y > $null
+        Write-Host "        Backed up $regPath to: $outputFile"
     }
     catch {
         Write-Host $_
@@ -63,9 +65,10 @@ function Disable-Updates {
     Write-Host "    Renaming wuauserv and WaaSMedicSvc..."
     Rename-Item HKLM:\SYSTEM\CurrentControlSet\Services\wuauserv -NewName wuauserv-BLOCKED!!
     Rename-Item HKLM:\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc -NewName WaaSMedicSvc-BLOCKED!!
-    if (Test-Path HKLM:\SYSTEM\CurrentControlSet\Services\wuauserv-BLOCKED!! -and Test-Path HKLM:\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc-BLOCKED!!){
+    if ((Test-Path HKLM:\SYSTEM\CurrentControlSet\Services\wuauserv-BLOCKED!!) -and (Test-Path HKLM:\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc-BLOCKED!!)){
         Write-Host "Successfully disabled Windows updates."
-        Write-Host "`nTo Enable updates again run: WU-Disable.ps1 -Enable"
+        Write-Host
+        Write-Host "To Enable updates again run: WU-Disable.ps1 -Enable"
     }
     else {
         Write-Host "Error occured. Try again or check the README"
