@@ -48,7 +48,7 @@ function Disable-Updates {
     try {
         Write-Host "    Backing up registry..."
         $regPath = "HKLM:\SYSTEM\CurrentControlSet\Services"
-        $outputFile = Join-Path $PSScriptRoot $regPath
+        $outputFile = Join-Path $PSScriptRoot "RegServicesBackup.reg"
 
         reg export "$regPath" "$outputFile" /y
         Write-Host "        Backed up $regPath to: $outputFIle"
