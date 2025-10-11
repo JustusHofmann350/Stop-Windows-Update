@@ -1,6 +1,6 @@
 # WU-Disable.ps1
-> **Author:** Justus Hofmann  
-> **Copyright © 2025 Justus Hofmann**
+> **Author:** LongSword350  
+> **Copyright © 2025 LongSword350**
 
 ---
 
